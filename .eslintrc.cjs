@@ -31,5 +31,10 @@ module.exports = {
     'vue/no-setup-props-destructure': ['off'], // 关闭props结构的校验
     //添加未定义变量错误提示
     'no-undef': 'error'
+  },
+  globals: {
+    ElMessage: 'readonly',
+    ElMessageBox: 'readonly',
+    ElLoading: 'readonly'
   }
 }

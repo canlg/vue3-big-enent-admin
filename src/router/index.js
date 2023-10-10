@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useUserStore } from '@/stores'
 // createRouter创建路由实例
 // createWebHistory    history 配置模式 地址栏不带井号
 // createWebHashHistory   hash模式配置   地址栏带井号
@@ -33,10 +34,17 @@ const router = createRouter({
         }
       ]
     }, //详情页
-    { path: '/login', component: () => import('@/viewws/login/LoginPage.vue') }, //登录页
-    { path: '/login', component: () => import('@/viewws/login/LoginPage.vue') }, //登录页
-    { path: '/login', component: () => import('@/viewws/login/LoginPage.vue') } //登录页
+    { path: '/login', component: () => import('@/views/login/LoginPage.vue') }, //登录页
+    { path: '/login', component: () => import('@/views/login/LoginPage.vue') }, //登录页
+    { path: '/login', component: () => import('@/views/login/LoginPage.vue') } //登录页
   ]
 })
 
+// 导航守卫 登陆访问拦截
+// 根据返回值决定放行还是拦截
+router.beforeEach((to) => {
+  // 如果没有token,且访问的是非登陆页,拦截到登陆,其他情况正常放行
+  const useStore = useUserStore()
+  if (!useStore.token && to.path !== '/login') return '/login'
+})
 export default router
